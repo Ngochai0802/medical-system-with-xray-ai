@@ -79,6 +79,4 @@ Xem **[hướng dẫn cài đặt](docs/SETUP.md)** để cấu hình SQL Server
 - Endpoint kiểm tra trạng thái AI chỉ xác nhận tiến trình phản hồi, không bảo đảm mô hình đã tải thành công.
 - Hướng dẫn chạy được đối chiếu với mã nguồn; chưa xác minh toàn bộ quá trình cài đặt trên máy sạch.
 
-## Tác giả
 
-[Ngochai0802](https://github.com/Ngochai0802) · Sinh viên Công nghệ phần mềm, PTIT HCM.
