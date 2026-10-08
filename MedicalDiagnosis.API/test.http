@@ -1,0 +1,5 @@
+# Supply credentials locally; do not save tokens or passwords in this file.
+@baseUrl = http://localhost:5255
+
+### OpenAPI document (Development only)
+GET {{baseUrl}}/openapi/v1.json
