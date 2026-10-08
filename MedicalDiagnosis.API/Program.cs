@@ -6,6 +6,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using MedicalDiagnosis.API.Hubs;
 var builder = WebApplication.CreateBuilder(args);
+// Local secrets stay outside Git. Environment variables retain highest priority.
+builder.Configuration.AddJsonFile("appsettings.Local.json", optional: true, reloadOnChange: false)
+                     .AddEnvironmentVariables();
 
 // 1. Database
 builder.Services.AddSingleton<SlowQueryInterceptor>();
@@ -16,7 +19,9 @@ builder.Services.AddDbContext<AppDbContext>((sp, options) =>
     .AddInterceptors(sp.GetRequiredService<SlowQueryInterceptor>()));
 
 // 2. JWT Authentication
-var jwtKey = builder.Configuration["Jwt:Key"]!;
+var jwtKey = builder.Configuration["Jwt:Key"];
+if (string.IsNullOrWhiteSpace(jwtKey) || Encoding.UTF8.GetByteCount(jwtKey) < 32)
+    throw new InvalidOperationException("Set Jwt:Key to a random secret of at least 32 bytes in appsettings.Local.json or Jwt__Key.");
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {

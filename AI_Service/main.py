@@ -19,16 +19,18 @@ from typing import List, Dict
 
 app = FastAPI()
 
-# --- CẤU HÌNH ĐƯỜNG DẪN ---
-WWWROOT_PATH = r"C:\Users\LOCAL_USER\MedicalDiagnosis\MedicalDiagnosis.API\wwwroot"
+# Local configuration; the default upload path follows the repository location.
+from pathlib import Path
+from dotenv import load_dotenv
 
-# 1. Cấu hình Kết nối DB
-CONNECTION_STRING = (
-    "DRIVER={ODBC Driver 17 for SQL Server};"
-    "SERVER=MSI;"
-    "DATABASE=MedicalDiagnosisDB;"
-    "Trusted_Connection=yes;"
+load_dotenv(Path(__file__).resolve().parent / ".env")
+WWWROOT_PATH = os.environ.get(
+    "AI_WWWROOT_PATH",
+    str(Path(__file__).resolve().parent.parent / "MedicalDiagnosis.API" / "wwwroot"),
 )
+CONNECTION_STRING = os.environ.get("AI_DB_CONNECTION_STRING", "")
+if not CONNECTION_STRING:
+    raise RuntimeError("Set AI_DB_CONNECTION_STRING in AI_Service/.env")
 
 def get_severity_level(label, confidence):
     if label == "Bình thường":

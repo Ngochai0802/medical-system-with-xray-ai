@@ -14,7 +14,7 @@ Chạy npm trong `meddiag-frontend`, nơi chứa ứng dụng Vite; `package.jso
 
 ## 2. Cấu hình API và database
 
-Tạo hoặc cập nhật `MedicalDiagnosis.API/appsettings.Development.json` với cấu hình local. Nếu file đã tồn tại, giữ các thiết lập đang dùng và chỉ sửa giá trị cần thiết:
+Tạo hoặc cập nhật `MedicalDiagnosis.API/appsettings.Local.json` với cấu hình local. Nếu file đã tồn tại, giữ các thiết lập đang dùng và chỉ sửa giá trị cần thiết:
 
 ```json
 {
@@ -61,12 +61,12 @@ Swagger: http://localhost:5255/swagger.
 
 ## 3. Cấu hình AI Service
 
-Trong `AI_Service/main.py`, cập nhật:
+Sao chép `AI_Service/.env.example` thành `AI_Service/.env` và cập nhật:
 
-- `WWWROOT_PATH`: đường dẫn tuyệt đối tới `MedicalDiagnosis.API/wwwroot` trên máy bạn.
-- `CONNECTION_STRING`: đúng SQL Server, database và driver ODBC. Database phải trùng với API.
+- `AI_WWWROOT_PATH`: đường dẫn tuyệt đối tới `MedicalDiagnosis.API/wwwroot` trên máy bạn.
+- `AI_DB_CONNECTION_STRING`: đúng SQL Server, database và driver ODBC. Database phải trùng với API.
 
-Hai giá trị trên hiện được khai báo trực tiếp trong code, chưa đọc từ `.env`.
+Hai giá trị được đọc từ `.env`. Có thể bỏ `AI_WWWROOT_PATH` nếu dùng thư mục `wwwroot` mặc định trong repository.
 
 Đặt trọng số đúng tên trong `AI_Service/weights/`. Bộ lọc cũng đọc `weights/class_names.json` nếu có; file này phải chứa danh sách nhãn đúng thứ tự khi huấn luyện. Nếu thiếu, code dùng `anh_thuong`, `khong_phai_phoi`, `phoi`; cần xác nhận thứ tự này phù hợp trọng số của bạn.
 
@@ -79,7 +79,7 @@ python -m venv .venv
 Nếu sử dụng phản hồi chat Gemini, sao chép `.env.example` thành `.env` rồi điền API key riêng:
 
 ```powershell
-Copy-Item .env.example .env
+if (-not (Test-Path .env)) { Copy-Item .env.example .env }
 ```
 
 Không có key thì endpoint chat AI sẽ báo thiếu cấu hình. Không đưa key lên GitHub.
@@ -126,8 +126,16 @@ npm run build
 | Triệu chứng | Kiểm tra |
 | --- | --- |
 | AI không khởi động | Dependency Python, driver ODBC và file trọng số của bộ lọc |
-| Không tìm thấy ảnh | `WWWROOT_PATH`, đường dẫn lưu trong database và thư mục uploads |
+| Không tìm thấy ảnh | `AI_WWWROOT_PATH`, đường dẫn lưu trong database và thư mục uploads |
 | Không kết nối SQL Server | Tên instance, quyền Windows Authentication và database ở cả API/Python |
 | Giao diện không gọi được API | API đã chạy ở cổng 5255; giao diện ở cổng 5173 |
 | Không có phản hồi chat AI | `GEMINI_API_KEY`, kết nối mạng và phản hồi từ dịch vụ Gemini |
 | Không có heatmap | Log tải model và Grad-CAM; API còn chạy không đồng nghĩa suy luận thành công |
+
+## Cấu hình riêng và bảo mật
+
+- `appsettings.Local.json` và `AI_Service/.env` chỉ lưu trên máy, không commit.
+- Tạo JWT key ngẫu nhiên dài ít nhất 32 byte; không dùng chuỗi ví dụ trong tài liệu.
+- Khi thay JWT key, khởi động lại API. Access token ký bằng khóa cũ sẽ không còn hợp lệ.
+- Tài khoản seed chỉ dành cho demo local. Đổi mật khẩu trước khi cho người khác truy cập; không dùng mật khẩu cá nhân cho dữ liệu demo.
+- Dùng email GitHub noreply cho các commit mới nếu muốn giữ kín email cá nhân.

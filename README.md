@@ -73,7 +73,7 @@ Xem **[hướng dẫn cài đặt](docs/SETUP.md)** để cấu hình SQL Server
 
 ## Giới hạn hiện tại
 
-- Một số URL, tên SQL Server và đường dẫn thư mục đang khai báo trực tiếp trong code; cần điều chỉnh khi chuyển máy.
+- Một số URL dịch vụ còn khai báo trong code. SQL Server, JWT key và đường dẫn ảnh tùy chỉnh được cấu hình riêng trên máy; xem hướng dẫn cài đặt.
 - Trọng số mô hình phải được chuẩn bị riêng nếu bản clone không có. Hướng dẫn cài đặt nêu đúng tên file mà code sử dụng.
 - Tài liệu hiện chưa có nguồn dữ liệu huấn luyện, quy trình đánh giá hoặc chỉ số kiểm thử mô hình có thể tái lập; không công bố độ chính xác khi chưa có bằng chứng.
 - Endpoint kiểm tra trạng thái AI chỉ xác nhận tiến trình phản hồi, không bảo đảm mô hình đã tải thành công.

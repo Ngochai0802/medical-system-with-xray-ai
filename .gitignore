@@ -47,3 +47,9 @@ coverage/
 # Operating system files
 .DS_Store
 Thumbs.db
+
+# Editor settings and local request credentials
+.vscode/
+*.http.local
+*.pem
+*.pfx
