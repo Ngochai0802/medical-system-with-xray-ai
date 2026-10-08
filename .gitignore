@@ -18,3 +18,32 @@ obj/
 AI_Service/.env
 bcck/
 temp_zip/
+# Local secrets and per-machine settings
+.env
+.env.*
+!.env.example
+!.env.*.example
+**/appsettings.Development.json
+**/appsettings.Local.json
+
+# Python environments and generated files
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Frontend output and logs
+dist/
+dist-ssr/
+coverage/
+*.log
+
+# Local database files
+*.db
+*.db-shm
+*.db-wal
+
+# Operating system files
+.DS_Store
+Thumbs.db

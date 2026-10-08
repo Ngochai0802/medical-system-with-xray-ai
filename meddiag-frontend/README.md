@@ -1,16 +1,33 @@
-# React + Vite
+# Medical Diagnosis — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Giao diện React cho ba vai trò: bệnh nhân, bác sĩ và quản trị viên.
 
-Currently, two official plugins are available:
+## Chạy local
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Trong thư mục này:
 
-## React Compiler
+```powershell
+npm ci
+npm run dev -- --port 5173
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Ứng dụng gọi API tại `http://localhost:5255`. Xem [hướng dẫn cài đặt toàn hệ thống](../docs/SETUP.md) trước khi kiểm tra các chức năng cần backend hoặc AI.
 
-## Expanding the ESLint configuration
+## Lệnh
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+| Lệnh | Mục đích |
+| --- | --- |
+| `npm run dev` | Chạy Vite development server |
+| `npm run build` | Tạo bản build trong `dist/` |
+| `npm run lint` | Kiểm tra ESLint |
+| `npm run preview` | Xem thử bản build |
+
+## Cấu trúc
+
+- `src/pages/`: màn hình theo vai trò và xác thực.
+- `src/components/common/`: layout, bảo vệ route và thành phần dùng chung.
+- `src/api/`: Axios client và các hàm gọi API.
+- `src/store/`: trạng thái đăng nhập và thông báo bằng Zustand.
+- `src/hooks/`: kết nối SignalR.
+
+Thông tin dự án và kiến trúc: [README chính](../README.md).
